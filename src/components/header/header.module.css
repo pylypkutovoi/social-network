@@ -1,0 +1,16 @@
+.header {
+  grid-area: h;
+  background-color:  #edc7b7;
+}
+.header img {
+  width: 60px;
+}
+
+.headerRaw {
+  display: flex;
+  justify-content: space-between;
+}
+
+.headerRaw a{
+  color: #fff;
+}

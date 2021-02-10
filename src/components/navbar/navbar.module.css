@@ -1,0 +1,30 @@
+.nav {
+
+  background-color:#e3e2df;
+}
+.nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  height: 25px;
+}
+.item a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding-left: 30px;
+}
+
+.active {
+  background-color: #deddd8;
+}
+
+.item:hover {
+  background-color: #deddd8;
+  cursor: pointer;
+}
+
+

@@ -1,0 +1,13 @@
+.pageButtons span {
+    border: 1px solid black;
+    padding: 2px 6px;
+    margin: 2px;
+    background-color: white;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.selectedPage {
+    font-weight: bold;
+    font-size: 1rem;
+}
