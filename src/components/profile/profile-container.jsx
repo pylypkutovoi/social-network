@@ -17,8 +17,11 @@ class ProfileContainer extends Component{
         this.props.history.push("/login")
       }
     }
-    this.props.getUserStatus(userId);
-    this.props.getUserProfile(userId);
+    if (userId) {
+      this.props.getUserStatus(userId);
+      this.props.getUserProfile(userId);
+    }
+
   }
 
   render() {
