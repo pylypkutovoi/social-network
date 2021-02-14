@@ -5,9 +5,14 @@ import userPlaceholder from '../../../assets/images/placeholder.jpg'
 //import ProfileStatus from './profile-status';
 import ProfileStatusHooks from "./profile-status-hooks";
 
-const ProfileInfo = ({ profile, status, updateUserStatus }) => {
+const ProfileInfo = ({ isOwner, profile, status, updateUserStatus, saveUserPhoto }) => {
   if (!profile) {
     return <Spinner/>
+  }
+  const onPhotoSelected = (e) => {
+    if (e.target.files.length) {
+      saveUserPhoto(e.target.files[0]);
+    }
   }
   return (
     <div>
@@ -17,12 +22,16 @@ const ProfileInfo = ({ profile, status, updateUserStatus }) => {
       <div className={styles.profileContainer}>
         <div className={styles.profileImage}>
           <img
-            src={profile.photos.large !== null ?
-              profile.photos.large : userPlaceholder}
+            src={profile.photos.large || userPlaceholder}
             alt=""
           />
+          <div>
+            {isOwner && <input type={"file"} onChange={onPhotoSelected}/>}
+          </div>
         </div>
+
         <div className={styles.profileDescription}>
+
           <ProfileStatusHooks status={status} updateUserStatus={updateUserStatus}/>
           <div>{profile.fullName}</div>
           <div>{profile.aboutMe}</div>

@@ -2,9 +2,6 @@ import React from 'react';
 import DialogItem from './dialog-item/dialog-item';
 import MessageItem from './message-item/message-item';
 import s from './dialogs.module.css';
-import {Field, reduxForm} from 'redux-form';
-import {Textarea} from '../common/forms-controls/forms-controls';
-import {maxLength, required} from '../../utils/validators';
 import AddMessageForm from "./dialog-form/add-message-form";
 
 
