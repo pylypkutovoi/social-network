@@ -1,4 +1,5 @@
 import {profileAPI, usersAPI} from '../services/samurai.service';
+import {stopSubmit, SubmissionError, updateSyncErrors} from "redux-form";
 
 const ADD_POST = 'ADD_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -93,6 +94,16 @@ export const saveUserPhoto = (file) => async (dispatch) => {
   const response = await profileAPI.savePhoto(file)
   if (response.data.resultCode === 0) {
     dispatch(setUserPhoto(response.data.data.photos))
+  }
+}
+export const saveUserProfile = (profileData) => async (dispatch, getState) => {
+  const userId = getState().auth.userId;
+  const response = await profileAPI.saveProfile(profileData)
+  if (response.data.resultCode === 0) {
+    dispatch(getUserProfile(userId));
+  } else {
+    dispatch(stopSubmit("profileDataForm", {_error: response.data.messages[0]}));
+    return Promise.reject(response.data.messages[0]);
   }
 }
 

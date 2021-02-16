@@ -1,7 +1,13 @@
 import React, {Component} from 'react'
 import Profile from './profile';
 import { connect } from 'react-redux';
-import {getUserProfile, getUserStatus, saveUserPhoto, updateUserStatus} from '../../redux/profile-reducer';
+import {
+  getUserProfile,
+  getUserStatus,
+  saveUserPhoto,
+  saveUserProfile,
+  updateUserStatus
+} from '../../redux/profile-reducer';
 import {withRouter} from 'react-router-dom';
 import {withAuthRedirect} from '../hoc/with-auth-redirect';
 import {compose} from 'redux';
@@ -55,7 +61,8 @@ const mapDispatchToProps = {
   getUserProfile,
   getUserStatus,
   updateUserStatus,
-  saveUserPhoto
+  saveUserPhoto,
+  saveUserProfile
 }
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),

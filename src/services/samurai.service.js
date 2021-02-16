@@ -43,6 +43,9 @@ export const profileAPI = {
         'Content-Type': 'multipart/form-data'
       }
     })
+  },
+  saveProfile(profileData) {
+    return service.put('profile', profileData)
   }
 }
 
