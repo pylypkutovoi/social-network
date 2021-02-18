@@ -45,7 +45,7 @@ export const profileAPI = {
     })
   },
   saveProfile(profileData) {
-    return service.put('profile', profileData)
+    return service.put('profile', profileData).then(res => res.data);
   }
 }
 
@@ -53,11 +53,17 @@ export const authAPI = {
   authMe() {
     return service.get(`auth/me`).then(response => response.data);
   },
-  login(email, password, rememberMe = false) {
-    return service.post(`auth/login`, {email, password, rememberMe});
+  login(email, password, rememberMe = false, captcha = "") {
+    return service.post(`auth/login`, {email, password, rememberMe, captcha});
   },
   logout() {
     return service.delete(`auth/login`);
+  }
+}
+
+export const securityAPI = {
+  getCaptchaUrl() {
+    return service.get('security/get-captcha-url')
   }
 }
 

@@ -16,7 +16,10 @@ const ProfileInfo = ({ isOwner, profile, status, updateUserStatus, saveUserPhoto
   }
   const saveProfileInfo = (formData) => {
     saveUserProfile(formData)
-      .then(() => setEditMode(false));
+      .then(() => setEditMode(false))
+      .catch(error => {
+        alert(error);
+      })
   }
 
   if (!profile) {
