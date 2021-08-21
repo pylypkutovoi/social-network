@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import Users from './users';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 
 import {
   follow, requestUsers,
-  setCurrentPage,
   unfollow,
 } from '../../redux/users-reducer';
 import Spinner from '../common/spinner/spinner';
@@ -15,15 +14,34 @@ import {
   getPageSize,
   getTotalUsersCount, getUsers,
 } from "../../redux/users-selectors";
+import { UserType } from '../../types/types';
+import { AppState } from '../../redux/redux-store';
 
-class UsersContainer extends Component{
+type MapStateToPropsType= {
+  currentPage: number;
+  pageSize: number;
+  isLoading: boolean;
+  totalUsersCount: number;
+  users: Array<UserType>;
+  isFollowing: Array<number>;
 
+}
+
+type MapDispatchToPropsType = {
+  follow: (userId: number) => void;
+  unfollow: (userId: number) => void;
+  requestUsers: (currentPage: number, pageSize: number) => void
+}
+
+type Props = MapStateToPropsType & MapDispatchToPropsType
+
+class UsersContainer extends Component<Props>{
   componentDidMount() {
     const {currentPage, pageSize} = this.props;
     this.props.requestUsers(currentPage, pageSize)
 
   }
-  onPageChanged = (pageNumber) => {
+  onPageChanged = (pageNumber: number) => {
     const {pageSize} = this.props;
     this.props.requestUsers(pageNumber, pageSize)
   }
@@ -46,7 +64,7 @@ class UsersContainer extends Component{
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppState): MapStateToPropsType => {
   return {
     users: getUsers(state),
     pageSize: getPageSize(state),
@@ -61,8 +79,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps  = {
   follow,
   unfollow,
-  setCurrentPage,
   requestUsers
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect<MapStateToPropsType, MapDispatchToPropsType, {},AppState>(mapStateToProps, mapDispatchToProps)(UsersContainer);

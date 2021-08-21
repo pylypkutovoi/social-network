@@ -1,8 +1,20 @@
 import React from 'react';
+import { UserType } from '../../types/types';
 import Paginator from "../common/paginator/paginator";
 import User from "./user";
+type Props = {
+  currentPage: number;
+  onPageChanged: (pageNumber: number) => void;
+  pageSize: number;
+  totalUsersCount: number;
+  users: Array<UserType>;
+  isFollowing: Array<number>;
+  follow: (userId: number) => void;
+  unfollow: (userId: number) => void;
 
-const Users = ({currentPage, onPageChanged, pageSize, totalUsersCount, users, ...props}) => {
+}
+
+const Users: React.FC<Props> = ({currentPage, onPageChanged, pageSize, totalUsersCount, users, ...props}) => {
   const pagesCount = Math.ceil(totalUsersCount / pageSize);
   const pages = [];
   for (let i = 1; i <= pagesCount; i++) {
