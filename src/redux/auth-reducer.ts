@@ -1,4 +1,4 @@
-import {authAPI, securityAPI} from '../services/samurai.service';
+import {authAPI, ResultCodes, securityAPI} from '../services/samurai.service';
 import {stopSubmit} from "redux-form";
 
 
@@ -52,20 +52,20 @@ export const getCaptchaUrlSuccess = (captchaUrl: string): GetCaptchaUrlSucces=> 
 })
 
 export const getAuthUserData = () => async (dispatch: any) => {
-  const response = await authAPI.authMe();
-  if (response.resultCode === 0) {
-    const { id, email, login } = response.data;
+  const authData = await authAPI.authMe();
+  if (authData.resultCode === ResultCodes.Success) {
+    const { id, email, login } = authData.data;
     dispatch(setAuthUserData(id, email, login, true));
   }
 }
 
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => {
-  const response = await authAPI.login(email, password, rememberMe, captcha);
-  const {resultCode, messages} = response.data;
-  if (resultCode === 0) {
+  const loginData = await authAPI.login(email, password, rememberMe, captcha);
+  const {resultCode, messages} = loginData;
+  if (resultCode === ResultCodes.Success) {
     dispatch(getAuthUserData());
   } else {
-    if (resultCode === 10) {
+    if (resultCode === ResultCodes.CaptchaIsRequired) {
       dispatch(getCaptchaUrl())
     }
     const errorMessage = messages.length > 0 ? messages[0] : "Some error"

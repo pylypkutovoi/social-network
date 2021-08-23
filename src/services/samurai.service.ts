@@ -1,4 +1,5 @@
-import * as axios from 'axios';
+import { ProfileType } from './../types/types';
+import axios from 'axios';
 
 const  service = axios.create({
   withCredentials: true,
@@ -12,30 +13,30 @@ export const usersAPI = {
     return service.get(`users?page=${currentPage}&count=${pageSize}`)
       .then(response => response.data);
   },
-  followUser(userId) {
+  followUser(userId: number) {
     return service.post(`follow/${userId}`)
       .then(response => response.data);
   },
-  unfollowUser(userId) {
+  unfollowUser(userId: number) {
     return service.delete(`follow/${userId}`)
       .then(response => response.data);
   },
-  getProfile(userId) {
+  getProfile(userId: number) {
     return profileAPI.getProfile(userId);
   }
 }
 
 export const profileAPI = {
-  getProfile(userId) {
+  getProfile(userId: number) {
     return service.get(`profile/${userId}`);
   },
-  getStatus(userId) {
+  getStatus(userId: number) {
     return service.get(`profile/status/${userId}`);
   },
-  updateStatus(statusText) {
+  updateStatus(statusText: string) {
     return service.put(`profile/status`, {status: statusText});
   },
-  savePhoto(photoFile) {
+  savePhoto(photoFile: any) {
     const formData = new FormData();
     formData.append("image", photoFile);
     return service.put(`profile/photo`, formData, {
@@ -44,17 +45,34 @@ export const profileAPI = {
       }
     })
   },
-  saveProfile(profileData) {
+  saveProfile(profileData: ProfileType) {
     return service.put('profile', profileData).then(res => res.data);
   }
 }
 
+export enum ResultCodes {
+  Success = 0,
+  Error = 1,
+  CaptchaIsRequired = 10
+} 
+
+type AuthMe = {
+  data: {id: number, email: string, login: string};
+  resultCode: ResultCodes;
+  messages: string[];
+}
+
+type Login = {
+  data: {userId: number};
+  resultCode: ResultCodes;
+  messages: string[];
+}
 export const authAPI = {
   authMe() {
-    return service.get(`auth/me`).then(response => response.data);
+    return service.get<AuthMe>(`auth/me`).then(response => response.data);
   },
-  login(email, password, rememberMe = false, captcha = "") {
-    return service.post(`auth/login`, {email, password, rememberMe, captcha});
+  login(email: string, password: string, rememberMe = false, captcha: null | string = "") {
+    return service.post<Login>(`auth/login`, {email, password, rememberMe, captcha}).then(response => response.data);
   },
   logout() {
     return service.delete(`auth/login`);
@@ -66,4 +84,3 @@ export const securityAPI = {
     return service.get('security/get-captcha-url')
   }
 }
-
