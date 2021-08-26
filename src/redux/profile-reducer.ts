@@ -1,7 +1,8 @@
 import { ProfileType, PhotosType } from './../types/types';
-import {profileAPI, usersAPI} from '../services/samurai.service';
+import {profileAPI} from '../services/profile-api';
 import {stopSubmit} from "redux-form";
-import { PostType } from '../types/types';
+import {PostType} from '../types/types';
+import { ResultCodes } from '../services/samurai.service';
 
 const ADD_POST = 'ADD_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -102,32 +103,32 @@ export const setUserPhoto = (photos: PhotosType): SetUserPhoto => ({type: SET_US
 
 
 export const getUserProfile = (userId: number) => async (dispatch: any) => {
-  const response = await usersAPI.getProfile(userId);
-  dispatch(setUserProfile(response.data));
+  const data = await profileAPI.getProfile(userId);
+  dispatch(setUserProfile(data));
 }
 
 export const getUserStatus = (userId: number) => async (dispatch: any) => {
-  const response = await profileAPI.getStatus(userId);
-  dispatch(setUserStatus(response.data));
+  const data = await profileAPI.getStatus(userId);
+  dispatch(setUserStatus(data));
 
 }
 export const updateUserStatus = (status: string) => async (dispatch: any) => {
-  const response = await profileAPI.updateStatus(status)
-  if (response.data.resultCode === 0) {
+  const data = await profileAPI.updateStatus(status) 
+  if (data.resultCode === ResultCodes.Success) {
     dispatch(setUserStatus(status))
   }
 }
 
 export const saveUserPhoto = (file: any) => async (dispatch: any) => {
-  const response = await profileAPI.savePhoto(file)
-  if (response.data.resultCode === 0) {
-    dispatch(setUserPhoto(response.data.data.photos))
+  const data = await profileAPI.savePhoto(file)
+  if (data.resultCode === ResultCodes.Success) {
+    dispatch(setUserPhoto(data.data.photos))
   }
 }
 export const saveUserProfile = (profileData: ProfileType) => async (dispatch: any, getState: any) => {
   const userId = getState().auth.userId;
   const data = await profileAPI.saveProfile(profileData)
-  if (data.resultCode === 0) {
+  if (data.resultCode === ResultCodes.Success) {
     dispatch(getUserProfile(userId));
   } else {
     dispatch(stopSubmit("profileDataForm", {_error: data.messages[0]}));

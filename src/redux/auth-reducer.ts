@@ -1,4 +1,6 @@
-import {authAPI, ResultCodes, securityAPI} from '../services/samurai.service';
+import {ResultCodes} from '../services/samurai.service';
+import {authAPI} from '../services/auth-api';
+import {securityAPI} from '../services/security-api'
 import {stopSubmit} from "redux-form";
 
 
@@ -74,15 +76,14 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
 }
 
 export const getCaptchaUrl = () => async (dispatch: any) => {
-  const response = await securityAPI.getCaptchaUrl();
-  const captchaUrl = response.data.url;
-
+  const data = await securityAPI.getCaptchaUrl();
+  const captchaUrl = data.url;
   dispatch(getCaptchaUrlSuccess(captchaUrl));
 }
 
 export const logout = () => async (dispatch: any) => {
   const response = await authAPI.logout();
-  if (response.data.resultCode === 0) {
+  if (response.resultCode === ResultCodes.Success) {
     dispatch(setAuthUserData(null, null, null, false));
   }
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Users from './users';
-import { connect, ConnectedProps } from 'react-redux';
+import {connect} from 'react-redux';
 
 import {
   follow, requestUsers,
