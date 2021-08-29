@@ -1,5 +1,5 @@
 import {
-  addNewMessageCreator
+  actions
 } from '../../redux/dialogs-reducer';
 import Dialogs from './dialogs';
 
@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    sendMessage: (newMessageBody) => dispatch(addNewMessageCreator(newMessageBody)),
+    sendMessage: (newMessageBody) => dispatch(actions.addNewMessageCreator(newMessageBody)),
   }
 }
 

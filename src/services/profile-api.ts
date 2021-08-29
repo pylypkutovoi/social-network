@@ -5,7 +5,7 @@ type SavePhotoData = {
   photos: PhotosType
 }
 export const profileAPI = {
-  getProfile(userId: number) {
+  getProfile(userId: number | null) {
     return service.get<ProfileType>(`profile/${userId}`).then(res => res.data);
   },
   getStatus(userId: number) {
@@ -14,7 +14,7 @@ export const profileAPI = {
   updateStatus(statusText: string) {
     return service.put<TResponse>(`profile/status`, {status: statusText}).then(res => res.data);
   },
-  savePhoto(photoFile: any) {
+  savePhoto(photoFile: File) {
     const formData = new FormData();
     formData.append("image", photoFile);
     return service.put<TResponse<SavePhotoData>>(`profile/photo`, formData, {
