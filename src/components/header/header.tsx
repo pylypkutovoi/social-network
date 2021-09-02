@@ -2,7 +2,16 @@ import React from 'react'
 import styles from './header.module.css';
 import {NavLink} from 'react-router-dom';
 
-const Header = (props) => {
+export type MapStateToPropsType = {
+  isAuth: boolean;
+  login: string | null;
+}
+
+export type MapDispatchToPropsType = {
+  logout: () => void;
+}
+
+const Header: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (props) => {
   return (
     <header className={styles.header}>
       <div className={styles.headerRaw}>

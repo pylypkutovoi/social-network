@@ -13,8 +13,7 @@ const initialState =  {
     {id: 4, postText: 'hello, how are you!', likesCount: 5 },
   ] as Array<PostType>,
   profile: null as ProfileType | null,
-  status: '',
-  newPostText: ''
+  status: ''
 }
 
 const profileReducer = (state = initialState, action: ActionsType): InitialState => {
@@ -27,8 +26,7 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
       };
       return  {
         ...state,
-        postsData: [...state.postsData, newPost],
-        newPostText: ''
+        postsData: [...state.postsData, newPost]
       }
     case 'PROFILE/DELETE_POST':
       return {

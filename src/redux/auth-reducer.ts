@@ -61,7 +61,6 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
     }
     const errorMessage = messages.length > 0 ? messages[0] : "Some error"
     dispatch(stopSubmit("login", {_error: errorMessage}));
-    dispatch({type: 123})
   }
 }
 

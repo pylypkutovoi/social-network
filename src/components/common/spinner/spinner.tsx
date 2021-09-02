@@ -1,7 +1,7 @@
 import React from 'react';
 import spinner from '../../../assets/images/Spinner.svg';
 
-const Spinner = (props) => {
+const Spinner: React.FC = () => {
   return (
     <div>
       <img src={spinner} alt='spinner'/>

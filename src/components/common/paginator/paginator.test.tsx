@@ -1,6 +1,6 @@
 import React from "react";
 import { create } from "react-test-renderer";
-import Paginator from "./Paginator";
+import Paginator from "./paginator";
 
 describe("Paginator component tests", () => {
   test("Should render 10 pages when totalItemsCount 11", () => {

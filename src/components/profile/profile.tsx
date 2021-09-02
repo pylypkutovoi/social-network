@@ -1,10 +1,10 @@
-import React, { Props } from 'react';
+import React from 'react';
 import MyPostsContainer from './my-posts/my-posts-container';
 import ProfileInfo from './profile-info/profile-info';
 import {ProfileType} from './../../types/types'
 
 type PropsType = {
-  isOwner: Boolean;
+  isOwner: boolean;
   profile: ProfileType | null;
   status: string;
   updateUserStatus: (status: string) => void;

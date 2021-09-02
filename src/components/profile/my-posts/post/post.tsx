@@ -1,7 +1,12 @@
 import React from 'react';
 import s from './post.module.css';
 
-const Post = ({message, count}) => {
+type PropsType = {
+  message: string;
+  count: number;
+}
+
+const Post: React.FC<PropsType>= ({message, count}) => {
   return (
     <div className={s.item}>
       <img src="https://thumbs.dreamstime.com/b/default-avatar-photo-placeholder-profile-picture-default-avatar-photo-placeholder-profile-picture-eps-file-easy-to-edit-125707135.jpg" alt="avatar" />
