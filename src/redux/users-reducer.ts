@@ -1,3 +1,4 @@
+import { ResultCodes, TResponse } from './../services/samurai.service';
 import { BaseThunkType, InferActionsType } from './redux-store';
 import {UserType} from './../types/types';
 import {usersAPI} from '../services/users-api';
@@ -82,22 +83,23 @@ export const requestUsers = (page: number, pageSize: number): ThunkType => async
 }
 const followUnffolow = async (dispatch: Dispatch<ActionsType>,
                               userId: number,
-                              apiMethod: any,
+                              apiMethod: (userId: number) => Promise<TResponse>,
                               actionCreator: (userId:  number) => ActionsType) => {
   dispatch(actions.userFollowingProgress(true, userId));
   const data = await apiMethod(userId);
-  if (data.resultCode === 0 ) {
+
+  if (data.resultCode === ResultCodes.Success) {
     dispatch(actionCreator(userId));
   }
   dispatch(actions.userFollowingProgress(false, userId));
 
 }
 export const follow = (userId: number): ThunkType => async (dispatch) => {
-  followUnffolow(dispatch, userId, usersAPI.followUser, actions.followSucces);
+  await followUnffolow(dispatch, userId, usersAPI.followUser, actions.followSucces);
 }
 
 export const unfollow = (userId: number): ThunkType => async (dispatch) => {
-  followUnffolow(dispatch, userId, usersAPI.unfollowUser, actions.unfollowSucces);
+  await followUnffolow(dispatch, userId, usersAPI.unfollowUser, actions.unfollowSucces);
 }
 
 
