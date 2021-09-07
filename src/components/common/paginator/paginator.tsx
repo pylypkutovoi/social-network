@@ -3,13 +3,13 @@ import styles from './paginator.module.css';
 
 type Props = {
   currentPage?: number;
-  onPageChanged?: (pageNumber: number) => void;
+  onPageChange?: (pageNumber: number) => void;
   totalItemsCount: number;
   pageSize: number;
   portionSize?: number;
 }
 
-const Paginator: React.FC<Props> = ({currentPage = 1, onPageChanged = () => {}, totalItemsCount, pageSize, portionSize = 10}) => {
+const Paginator: React.FC<Props> = ({currentPage = 1, onPageChange = () => {}, totalItemsCount, pageSize, portionSize = 10}) => {
   const pagesCount = Math.ceil(totalItemsCount / pageSize);
   const pages = [];
   for (let i = 1; i <= pagesCount; i++) {
@@ -31,7 +31,7 @@ const Paginator: React.FC<Props> = ({currentPage = 1, onPageChanged = () => {}, 
         return <span
           className={currentPage === p ? styles.selectedPage : undefined}
           key={p}
-          onClick={() => onPageChanged(p)}
+          onClick={() => onPageChange(p)}
         >{p} </span>
       })}
       {portionCount > portionNumber  &&

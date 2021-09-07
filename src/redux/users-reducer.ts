@@ -2,7 +2,7 @@ import { ResultCodes, TResponse } from './../services/samurai.service';
 import { BaseThunkType, InferActionsType } from './redux-store';
 import {UserType} from './../types/types';
 import {usersAPI} from '../services/users-api';
-import {updateObjectInArray} from "../utils/object-helpers";
+import {updateObjectInArray} from '../utils/object-helpers';
 import {Dispatch} from 'redux';
 
 const initialState = {
@@ -10,6 +10,7 @@ const initialState = {
   pageSize: 10,
   totalUsersCount: 100,
   currentPage: 1,
+  filter: {term: '', friend: null as null | boolean},
   isLoading: true,
   isFollowing: [] as number[]
 }
@@ -35,7 +36,12 @@ const usersReducer = (state = initialState, action: ActionsType): InitialState =
       return {
         ...state, currentPage: action.currentPage
       }
-      case 'USERS/SET_TOTAL_USERS_COUNT':
+    case 'USERS/SET_FILTER':
+      return {
+        ...state,
+        filter: action.payload
+      }
+    case 'USERS/SET_TOTAL_USERS_COUNT':
       return {
         ...state, totalUsersCount: action.count
       }
@@ -61,6 +67,7 @@ export const actions = {
   unfollowSucces: (userId: number) => ({ type: 'USERS/UNFOLLOW', userId } as const),
   setUsers: (users: UserType[]) => ({ type: 'USERS/SET_USERS', users } as const),
   setCurrentPage: (currentPage: number) => ({ type: 'USERS/SET_CURRENT_PAGE', currentPage} as const),
+  setFilter: (filter: FilterType) => ({type: 'USERS/SET_FILTER', payload: filter} as const),
   setTotalUsersCount: (count: number) => ({ type: 'USERS/SET_TOTAL_USERS_COUNT', count} as const),
   loadingUsers: (isFetching: boolean) => ({ type: 'USERS/FETCH_USERS_SUCCESS', isFetching} as const),
   userFollowingProgress: (isFetching: boolean, userId: number) => ({
@@ -69,11 +76,12 @@ export const actions = {
 }
 
 
-export const requestUsers = (page: number, pageSize: number): ThunkType => async (dispatch) => {
+export const requestUsers = (page: number, pageSize: number, filter: FilterType): ThunkType => async (dispatch) => {
   dispatch(actions.loadingUsers(true));
   dispatch(actions.setCurrentPage(page))
+  dispatch(actions.setFilter(filter))
   
-  const data = await usersAPI.getUsers(page, pageSize)
+  const data = await usersAPI.getUsers(page, pageSize, filter.term, filter.friend)
 
   dispatch(actions.loadingUsers(false));
   dispatch(actions.setUsers(data.items));
@@ -106,5 +114,6 @@ export const unfollow = (userId: number): ThunkType => async (dispatch) => {
 export default usersReducer;
 
 export type InitialState = typeof initialState;
+export type FilterType = typeof initialState.filter;
 type ActionsType = InferActionsType<typeof actions>;
 type ThunkType = BaseThunkType<ActionsType>;

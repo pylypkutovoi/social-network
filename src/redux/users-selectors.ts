@@ -24,3 +24,7 @@ export const getIsLoading = (state: AppState) => {
 export const getIsFollowing = (state: AppState) => {
   return state.usersPage.isFollowing
 }
+
+export const getUsersFilter = (state: AppState) => {
+  return state.usersPage.filter
+}
