@@ -5,8 +5,8 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import News from './components/news/news';
 import Music from './components/music/music';
 import Settings from './components/settings/settings';
-import Login from './components/Login/login';
-import UsersContainer from './components/users/users-container';
+import {Login} from './components/Login/login';
+import {UsersPage} from './components/users/users-page';
 import HeaderContainer from './components/header/header-container';
 import {connect, Provider} from "react-redux"; 
 import {withRouter} from 'react-router-dom';
@@ -53,7 +53,7 @@ class App extends React.Component<PropsType> {
           />
           <Route
             path="/users"
-            render={() => <UsersContainer/>}
+            render={() => <UsersPage/>}
           />
 
           <Route path="/news" component={News}/>
