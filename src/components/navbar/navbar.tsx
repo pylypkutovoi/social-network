@@ -1,43 +1,48 @@
 import React from 'react'
-import {NavLink} from 'react-router-dom';
-import s from './navbar.module.css'
+import { Link } from 'react-router-dom';
+import { Menu } from 'antd';
+import { UserOutlined, NotificationOutlined, MessageOutlined, TeamOutlined } from '@ant-design/icons';
+const { SubMenu } = Menu;
 
 const Navbar: React.FC = () => {
   return (
-    <nav className={s.nav}>
-      <ul>
-        <li className={s.item}>
-          <NavLink to="/profile" activeClassName={s.active}>
-            My Profile
-          </NavLink>
-        </li>
-        <li className={s.item}>
-          <NavLink  to="/dialogs" activeClassName={s.active}>
-            Messages
-          </NavLink>
-        </li>
-        <li className={s.item}>
-          <NavLink  to="/users" activeClassName={s.active}>
-            Users
-          </NavLink>
-        </li>
-        <li className={s.item}>
-          <NavLink to="/news" activeClassName={s.active}>
+    <Menu
+      mode="inline"
+      defaultSelectedKeys={['1']}
+      style={{ height: '100%', borderRight: 0 }}
+    >
+      <Menu.Item key="1" icon={<UserOutlined />}>
+        <Link to="/profile">
+          My Profile
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="2" icon={<MessageOutlined />}>
+        <Link to="/dialogs">
+          Messages
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="3" icon={<TeamOutlined />}>
+        <Link to="/users">
+          Users
+        </Link>
+      </Menu.Item>
+      <SubMenu key="sub1" icon={<NotificationOutlined />} title="Other" >
+        <Menu.Item key="4">
+          <Link to="/news" >
             News
-          </NavLink>
-        </li>
-        <li className={s.item}>
-          <NavLink to="/music" activeClassName={s.active}>
+          </Link></Menu.Item>
+        <Menu.Item key="5">
+          <Link to="/music">
             Music
-          </NavLink>
-        </li>
-        <li className={s.item}>
-          <NavLink to="/settings" activeClassName={s.active}>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="6">
+          <Link to="/settings">
             Settings
-          </NavLink>
-        </li>
-      </ul>
-    </nav>
+          </Link>
+        </Menu.Item>
+      </SubMenu>
+    </Menu>
   )
 }
 

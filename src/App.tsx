@@ -7,7 +7,7 @@ import Music from './components/music/music';
 import Settings from './components/settings/settings';
 import {Login} from './components/Login/login';
 import {UsersPage} from './components/users/users-page';
-import HeaderContainer from './components/header/header-container';
+import {AppHeader} from './components/header/header';
 import {connect, Provider} from "react-redux"; 
 import {withRouter} from 'react-router-dom';
 import {withSuspense} from "./components/hoc/with-suspense";
@@ -15,6 +15,9 @@ import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import Spinner from "./components/common/spinner/spinner";
 import store, { AppState } from "./redux/redux-store";
+import 'antd/dist/antd.css';
+import {Layout} from 'antd';
+const {Content, Sider} = Layout;
 
 const ProfileContainer = React.lazy(() => import('./components/profile/profile-container'));
 const DialogsContainer = React.lazy(() => import('./components/dialogs/dialogs-container'));
@@ -35,34 +38,32 @@ class App extends React.Component<PropsType> {
       return <Spinner/>
     }
     return (
-      <div className="app-wrapper">
-        <HeaderContainer/>
-        <div className="sidebar-wrapper">
-          <Navbar/>
-          {/*<FriendsList />*/}
-        </div>
-
-        <div className="content-wrapper">
-          <Route
-            path="/profile/:userId?"
-            render={() => <Profile/>}
-          />
-          <Route
-            path="/dialogs"
-            render={() => <Dialogs/>}
-          />
-          <Route
-            path="/users"
-            render={() => <UsersPage/>}
-          />
-
-          <Route path="/news" component={News}/>
-          <Route path="/music" component={Music}/>
-          <Route path="/settings" component={Settings}/>
-          <Route path="/login" component={Login}/>
-        </div>
-
-      </div>
+      <Layout>
+        <AppHeader/>
+        <Layout style={{ padding: '0 50px' }}>
+          <Sider width={200} className="site-layout-background" >
+            <Navbar/>
+          </Sider>
+          <Layout style={{ padding: '0 24px 24px' }}>
+            <Content
+              className="site-layout-background"
+              style={{
+                padding: 24,
+                margin: 0,
+                minHeight: 280,
+              }}
+            >
+              <Route path="/profile/:userId?" render={() => <Profile/>} />
+              <Route path="/dialogs" render={() => <Dialogs/>} />
+              <Route path="/users" render={() => <UsersPage/>} />
+              <Route path="/news" component={News}/>
+              <Route path="/music" component={Music}/>
+              <Route path="/settings" component={Settings}/>
+              <Route path="/login" component={Login}/>
+            </Content>
+          </Layout>
+        </Layout>
+      </Layout>
     );
   }
 }

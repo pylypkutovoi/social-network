@@ -15,7 +15,7 @@ export const withAuthRedirect = (WrappedComponent: React.ComponentType) => {
 
   const RedirectComponent: React.FC<MapStateToPropsType> =  (props) => {
     const {isAuth, ...restProps} = props;
-    if (isAuth) return <Redirect to="/login"/>
+    if (!isAuth) return <Redirect to="/login"/>
 
     return <WrappedComponent {...restProps}/>;
   }

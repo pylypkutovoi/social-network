@@ -1,16 +1,25 @@
 .header {
-  grid-area: h;
-  background-color:  #edc7b7;
-}
-.header img {
-  width: 60px;
-}
-
-.headerRaw {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+.header img {
+  display: block;
+  width: 80px;
+  margin: 0 auto
 }
 
-.headerRaw a{
-  color: #fff;
+.logo {
+  align-items: center;
+  width: 120px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
 }
+.userLogin {
+  color: #fff;
+  font-size: 16px;
+}
+.header a {
+  color: #fff
+}
+
