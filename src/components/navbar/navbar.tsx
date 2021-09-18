@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
-import { UserOutlined, NotificationOutlined, MessageOutlined, TeamOutlined } from '@ant-design/icons';
+import { UserOutlined, NotificationOutlined, MessageOutlined, TeamOutlined, CommentOutlined } from '@ant-design/icons';
 const { SubMenu } = Menu;
 
 const Navbar: React.FC = () => {
@@ -21,22 +21,27 @@ const Navbar: React.FC = () => {
           Messages
         </Link>
       </Menu.Item>
-      <Menu.Item key="3" icon={<TeamOutlined />}>
+      <Menu.Item key="3" icon={<CommentOutlined />}>
+        <Link to="/chat">
+          Chat
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="4" icon={<TeamOutlined />}>
         <Link to="/users">
           Users
         </Link>
       </Menu.Item>
       <SubMenu key="sub1" icon={<NotificationOutlined />} title="Other" >
-        <Menu.Item key="4">
+        <Menu.Item key="5">
           <Link to="/news" >
             News
           </Link></Menu.Item>
-        <Menu.Item key="5">
+        <Menu.Item key="6">
           <Link to="/music">
             Music
           </Link>
         </Menu.Item>
-        <Menu.Item key="6">
+        <Menu.Item key="7">
           <Link to="/settings">
             Settings
           </Link>

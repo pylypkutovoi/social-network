@@ -21,8 +21,10 @@ const {Content, Sider} = Layout;
 
 const ProfileContainer = React.lazy(() => import('./components/profile/profile-container'));
 const DialogsContainer = React.lazy(() => import('./components/dialogs/dialogs-container'));
+const ChatPage = React.lazy(() => import('./components/chat/chat'));
 const Profile = withSuspense(ProfileContainer);
 const Dialogs = withSuspense(DialogsContainer);
+const Chat = withSuspense(ChatPage);
 
 type PropsType = {
   initializeApp: () => void;
@@ -60,6 +62,7 @@ class App extends React.Component<PropsType> {
               <Route path="/music" component={Music}/>
               <Route path="/settings" component={Settings}/>
               <Route path="/login" component={Login}/>
+              <Route path="/chat" render={() => <Chat/>} />
             </Content>
           </Layout>
         </Layout>
